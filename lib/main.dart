@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ui/splashRoute.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,38 +12,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: SplashRoute(
+        homeRoute: Main(),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
+class Main extends StatefulWidget {
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MainState createState() => _MainState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-
+class _MainState extends State<Main> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      body: Container(
+        alignment: Alignment.center,
+        child: Text("wow"),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
-        ),
-      )
     );
   }
 }
