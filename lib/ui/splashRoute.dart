@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'splashBackground.dart';
+import 'dart:ui';
+import 'package:flamingo_diary/widget/sizeImageLoadWidget.dart';
 
 class SplashRoute extends StatefulWidget {
 
@@ -45,9 +48,27 @@ class _SplashRouteState extends State<SplashRoute> {
         primaryColor: Colors.white
       ),
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Container(
-          alignment: Alignment.center,
-          child: Text("wow"),
+          child: Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.all(0.0),
+                height: 500,
+                child: Image.network("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1562148"
+                    "947999&di=7abc660843cbd4af63dde37af6c0938a&imgtype=0&src=http%3A%2F%2Fb-ssl.duita"
+                    "ng.com%2Fuploads%2Fitem%2F201803%2F14%2F20180314123303_n2hWG.jpeg"),
+              ),
+              Text(
+                "Flamingo Diary",
+                style: TextStyle(
+                  fontSize: 19.0,
+                  color: Colors.red[400]
+                ),
+              )
+            ],
+          ),
         ),
         floatingActionButton: GestureDetector(
           onTap: () {
@@ -68,3 +89,4 @@ class _SplashRouteState extends State<SplashRoute> {
     super.dispose();
   }
 }
+
