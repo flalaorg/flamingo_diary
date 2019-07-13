@@ -4,6 +4,7 @@ import 'ui/splashRoute.dart';
 import 'package:flutter/services.dart';
 import 'widget/homeAppBar.dart';
 import 'widget/diaryListWidget.dart';
+import 'widget/CalendarWidget.dart';
 
 void main() {
   runApp(MyApp());
@@ -72,7 +73,7 @@ class _MainState extends State<Main> {
       body: DiaryListWidget(
         needHiddenCalendar: _needHiddenCalendar,
         diaryListBuilder: createDiaryList(),
-        calendarWidget: Text("wow"),
+        calendarWidget: CalendarWidget(),
       ),
     );
   }
@@ -113,6 +114,7 @@ class DrawerListWidget extends StatelessWidget {
     );
   }
 }
+
 
 SliverChildBuilderDelegate createDiaryList() =>
     SliverChildBuilderDelegate((BuildContext context, int index) =>
