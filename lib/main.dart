@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'ui/splashRoute.dart';
 import 'package:flutter/services.dart';
 import 'widget/homeAppBar.dart';
+import 'widget/diaryListWidget.dart';
 
 void main() {
   runApp(MyApp());
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: Colors.white
@@ -38,6 +40,45 @@ class Main extends StatefulWidget {
 class _MainState extends State<Main> {
 
   TextEditingController _textEditingController;
+  bool _needHiddenCalendar = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _textEditingController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.clear();
+    _textEditingController = null;
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: HomeAppBar(
+        searchController: _textEditingController,
+        onClickCalendarIcon: () {
+          setState(() {
+            _needHiddenCalendar = !_needHiddenCalendar;
+          });
+        },
+      ),
+      drawer: Drawer(
+        child: DrawerListWidget(),
+      ),
+      body: DiaryListWidget(
+        needHiddenCalendar: _needHiddenCalendar,
+        diaryListBuilder: createDiaryList(),
+        calendarWidget: Text("wow"),
+      ),
+    );
+  }
+}
+
+class DrawerListWidget extends StatelessWidget {
 
   final _header = UserAccountsDrawerHeader(
       accountName: Text("Shen"),
@@ -49,48 +90,55 @@ class _MainState extends State<Main> {
   );
 
   @override
-  void initState() {
-    super.initState();
-    _textEditingController = TextEditingController();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: HomeAppBar(
-        searchController: _textEditingController,
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: <Widget>[
-            _header,
-            ListTile(
-              title: Text("item 1"),
-              leading: CircleAvatar(child: Icon(Icons.add),),
-              onTap: () => Navigator.pop(context),
-            ),
-            ListTile(
-              title: Text("item 2"),
-              leading: CircleAvatar(child: Text("B2"),),
-              onTap: () => Navigator.pop(context),
-            ),
-            ListTile(
-              title: Text("item 3"),
-              leading: CircleAvatar(child: Text("JB"),),
-              onTap: () => Navigator.pop(context),
-            )
-          ],
+    return ListView(
+      children: <Widget>[
+        _header,
+        ListTile(
+          title: Text("item 1"),
+          leading: CircleAvatar(child: Icon(Icons.add),),
+          onTap: () => Navigator.pop(context),
         ),
-      ),
-      body: Container(
-        alignment: Alignment.center,
-        child: Text("wow"),
-      ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            print(_textEditingController.value);
-          }
-      ),
+        ListTile(
+          title: Text("item 2"),
+          leading: CircleAvatar(child: Text("B2"),),
+          onTap: () => Navigator.pop(context),
+        ),
+        ListTile(
+          title: Text("item 3"),
+          leading: CircleAvatar(child: Text("JB"),),
+          onTap: () => Navigator.pop(context),
+        )
+      ],
     );
   }
 }
+
+SliverChildBuilderDelegate createDiaryList() =>
+    SliverChildBuilderDelegate((BuildContext context, int index) =>
+        Card(
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Container(
+                  padding: EdgeInsets.only(left: 8.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text("Column Top"),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  padding: EdgeInsets.only(left: 8.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text("Column Bottom"),
+                ),
+              )
+            ],
+          ),
+        ),
+        childCount: 20
+    );
+
+

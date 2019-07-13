@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'splashBackground.dart';
 import 'dart:ui';
-import 'package:flamingo_diary/widget/sizeImageLoadWidget.dart';
 
 class SplashRoute extends StatefulWidget {
 
