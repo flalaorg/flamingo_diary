@@ -5,6 +5,9 @@ class CalendarSwitch {
 
   factory CalendarSwitch.getInstance() => CalendarSwitch._internal();
 
+  int selectMonth = DateTime.now().month;
+  int selectDay = DateTime.now().day;
+
   int everyMonthToDayNum(int index) {
     int temp;
     switch (index) {
@@ -26,4 +29,14 @@ class CalendarSwitch {
 
   bool isToday(int day) =>  day == DateTime.now().day
       ? true : false;
+
+  bool isSelectDay(int month, int day) => selectMonth == month && selectDay == day ? true : false;
+
+  void setSelectMonth(int i) {
+    selectMonth = i;
+  }
+
+  void setSelectDay(int i) {
+    selectDay = i;
+  }
 }
