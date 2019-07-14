@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flamingo_diary/util/calendarSwitch.dart';
 
 class CalendarWidget extends StatefulWidget {
   @override
@@ -59,6 +60,27 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       label: Text("")),
                 )
               ],
+            ),
+            Divider(
+              height: 0.5,
+              color: Colors.red[300],
+            ),
+            Expanded(
+              flex: 4,
+              child: Container(
+                padding: EdgeInsets.only(top: 5.0),
+                child: Center(
+                  child: GridView.builder(
+                    itemCount: CalendarSwitch.getInstance().everyMonthToDayNum(position + 1),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 7),
+                    itemBuilder: (context, index) {
+                      return Center(
+                        child: dayWidgetSwitch(position + 1, index + 1),
+                      );
+                    },
+                  ),
+                ),
+              ),
             )
           ],
         ),
@@ -68,14 +90,25 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   void previousMonth(int index) {
     setState(() {
       if (index > 0)
-        _pageController.animateToPage(index - 1, duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+        _pageController.animateToPage(index - 1, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
     });
   }
 
   void nextMonth(int index) {
     setState(() {
       if(index < 11)
-        _pageController.animateToPage(index + 1, duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
+        _pageController.animateToPage(index + 1, duration: Duration(milliseconds: 500), curve: Curves.easeIn);
     });
   }
+
+  Widget dayWidgetSwitch (int month, int day) => CalendarSwitch.getInstance().isToday(day)
+      && CalendarSwitch.getInstance().isMonth(month)
+      ? todayWidget(day) : otherWidget(day);
+
+  Widget todayWidget(int index) => CircleAvatar(
+    backgroundColor: Colors.red[300],
+    child: Text(index.toString(), style: TextStyle(color: Colors.white),),
+  );
+
+  Widget otherWidget(int index) => Text(index.toString());
 }
